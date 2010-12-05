@@ -1,0 +1,39 @@
+<web-app>
+	<servlet>
+		<servlet-name>ServletEx</servlet-name>
+		<servlet-class>global.main.Test</servlet-class>		
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>ServletEx</servlet-name>
+		<url-pattern>/firstServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MyJSP</servlet-name>
+		<jsp-file>/WEB-INF/ui/userInfoEJB.jsp</jsp-file>	
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>MyJSP</servlet-name>
+		<url-pattern>/jsp4EJB</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ServletEJBEx</servlet-name>
+		<servlet-class>global.main.TestEJB</servlet-class>		
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>ServletEJBEx</servlet-name>
+		<url-pattern>/ejbServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!--jsp-config>
+	        <taglib>
+        	    <taglib-uri>/WEB-INF/ltds/struts-bean.tld</taglib-uri>
+	            <taglib-location>/WEB-INF/ltds/struts-bean.tld</taglib-location>
+        	</taglib>
+	</jsp-config -->
+	
+</web-app> 

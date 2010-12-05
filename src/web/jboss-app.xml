@@ -1,0 +1,5 @@
+<jboss-app>
+	<loader-repository>
+		Test:archive=Test.ear
+	</loader-repository>
+</jboss-app>
