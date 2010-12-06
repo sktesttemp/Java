@@ -22,10 +22,10 @@
   	<java>Test.jar</java>
   </module>
 
-  <!--module>
-      <ejb>Test.jar</ejb> 
+  <module>
+      <ejb>ejbTest.jar</ejb> 
   </module>
   
-  <library-directory>lib</library-directory -->
+  <!-- library-directory>lib</library-directory -->
   
  </application>

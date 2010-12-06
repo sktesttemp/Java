@@ -30,8 +30,9 @@ public class TestSessionBean implements SessionBean
   
   public String displayHello()
   {
-      String msg="Hello! It is my first Session Bean.";
-      System.out.println("Printing on the server's console: "+msg);
+	  String msg = "";
+	  msg="Hello! It is my first Session Bean and now I have modified the message and tested it Twice! HA HA HA...";
+      System.out.println("Printing on the server's console: "+msg);      
       return msg;
   }
 }
