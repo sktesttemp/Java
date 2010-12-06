@@ -16,18 +16,33 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${ejb-classes.dir}"/>
         <echo message="Compiling Java files under - /${lib.dir}"/>
         <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        
+        <mkdir dir="${ejb-classes.dir}/global/ejb"/>
+        <copy todir="${ejb-classes.dir}/global/ejb">        	
+			<fileset dir="${classes.dir}/global/ejb/" includes="*.class" /> 
+		</copy>
     </target>
 
     <target name="build.jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
         <echo message="Creating Jar file under - /${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="global/ejb/*.*,global/main/*.*">
+        	<fileset dir="${src.web.ui.dir}" casesensitive="yes"/>
         </jar>
     </target>
 
-    <target name="end" depends="clean,build.jar,build.war,build.ear,deploy.app">  
+    <target name="build.ejbjar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <echo message="Creating EJB Jar file under - /${jar.dir}"/>
+        <jar destfile="${jar.dir}/ejb${ant.project.name}.jar" basedir="${ejb-classes.dir}">
+        	<zipfileset dir="${dd.dir}" includes="ejb-jar.xml,jboss.xml" prefix="META-INF"/>
+        </jar>
+    </target>       
+    
+    <target name="end" depends="clean,build.jar,build.ejbjar,build.war,build.ear,deploy.app">  
     	<echo message="Build Completed!"/>      	           	    
     </target> 
     
@@ -62,7 +77,7 @@
     	 <echo message="Creating EAR file under - /${ear.dir}"/>
 	     <ear earfile="${ear.dir}/${ant.project.name}.ear" appxml="${dd.dir}/application.xml">		      		      
 	     	<fileset dir="${war.dir}" includes="${ant.project.name}.war" />	     	
-	     	<fileset dir="${jar.dir}" includes="${ant.project.name}.jar" />	    
+	     	<fileset dir="${jar.dir}" includes="${ant.project.name}.jar,ejb${ant.project.name}.jar" />	    
 	     	<!-- This line can be uncommented if JBOSS deployment gives any problem --> 	
 	     	<!-- zipfileset dir="${dd.dir}" includes="jboss-app.xml" prefix="META-INF"/ -->
 	     </ear>
