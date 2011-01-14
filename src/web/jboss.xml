@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss>
-  <enterprise-beans>
-    <session>
-      <ejb-name>TestComponent</ejb-name>
-      <jndi-name>global.ejb.TestComponent</jndi-name>
-    </session>    
-  </enterprise-beans>
+	<enterprise-beans>
+		<session>
+			<ejb-name>TestComponent</ejb-name>
+			<jndi-name>global.ejb.TestComponent</jndi-name>
+		</session>  
+		<entity>
+			<ejb-name>TestComponentE</ejb-name>			
+			<local-jndi-name>global.ejb.TestComponentE</local-jndi-name>			
+		</entity>
+	</enterprise-beans>
 </jboss>

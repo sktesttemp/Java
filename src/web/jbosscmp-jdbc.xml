@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jbosscmp-jdbc PUBLIC   
+   "-//JBoss//DTD JBOSSCMP-JDBC 3.0//EN"
+   "http://www.jboss.org/j2ee/dtd/jbosscmp-jdbc_3_0.dtd">
+
+<jbosscmp-jdbc>
+	<defaults>
+		<datasource>java:MySqlDS</datasource>
+		<datasource-mapping>mySQL</datasource-mapping>
+		<create-table>false</create-table>
+		<remove-table>false</remove-table>			
+	</defaults>
+
+   <enterprise-beans>            
+      <entity>
+         <ejb-name>TestComponentE</ejb-name>
+         <table-name>tblemployee</table-name>
+
+         <cmp-field>
+            <field-name>EmployeeID</field-name>
+            <column-name>empid</column-name>
+            <not-null/>
+         </cmp-field>
+         <cmp-field>
+            <field-name>EmployeeName</field-name>
+            <column-name>empname</column-name>
+            <not-null/>
+         </cmp-field>
+         <cmp-field>
+            <field-name>EmployeeDOB</field-name>
+			<column-name>empdob</column-name>
+            <not-null/>
+         </cmp-field>
+         <cmp-field>
+            <field-name>EmployeeAddress</field-name>
+			<column-name>empaddress</column-name>
+            <not-null/>
+         </cmp-field>         
+      </entity>
+   </enterprise-beans>
+   
+</jbosscmp-jdbc>

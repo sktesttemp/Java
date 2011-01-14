@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<application xmlns="http://java.sun.com/xml/ns/j2ee"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
-             http://java.sun.com/xml/ns/j2ee/application_1_4.xsd"
-             version="1.4">
-<!-- DOCTYPE application PUBLIC '-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN' 'http://java.sun.com/dtd/application_1_3.dtd'>
-<application -->
+<!DOCTYPE application PUBLIC '-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN' 'http://java.sun.com/dtd/application_1_3.dtd'>
+<application>
 
-  <display-name>Test</display-name>
-  <description>First EAR file with Test - application</description>
+	<display-name>Test</display-name>
+	<description>First EAR file with Test - application</description>
+	
+	<module>
+		<web>
+		  	<web-uri>Test.war</web-uri>
+			<context-root>Test</context-root>
+		</web>
+	</module>
+	
+	<module>
+		<java>Test.jar</java>
+	</module>
+	
+	<module>
+		<ejb>ejbTest.jar</ejb> 
+	</module>   
   
-  <module>
-    <web>
-      <web-uri>Test.war</web-uri>
-      <context-root>Test</context-root>
-    </web>
-  </module>
-  
-  <module>
-  	<java>Test.jar</java>
-  </module>
-
-  <module>
-      <ejb>ejbTest.jar</ejb> 
-  </module>
-  
-  <!-- library-directory>lib</library-directory -->
-  
- </application>
+</application>

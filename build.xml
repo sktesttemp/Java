@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Test" basedir="." default="end">
 
+	<!-- Warning: Use 'ant' task after closing all the opened files from - /${deploy.dir}/${ant.project.name}.ear/ directory, when the app is in deploy-exploded mode. -->
+	
 	<property file="build.properties"/>
 	    
     <target name="clean">
     	<echo message="Deleting the existing class files and folders (Jar and War) under - /${build.dir}"/>
     	<delete quiet="true">
     		<fileset dir="${build.dir}" includes="**/*.*"/>
-    	</delete>            
+    	</delete>   
+    	<delete quiet="true">
+    		<fileset dir="${deploy.dir}" includes="${ant.project.name}.ear"/>
+    	</delete>          
     </target>
 		        
     <path id="classpath">
@@ -29,8 +34,7 @@
     <target name="build.jar" depends="compile">
         <mkdir dir="${jar.dir}"/>
         <echo message="Creating Jar file under - /${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="global/ejb/*.*,global/main/*.*">
-        	<fileset dir="${src.web.ui.dir}" casesensitive="yes"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="global/ejb/*.*,global/controller/*.*">        	
         </jar>
     </target>
 
@@ -38,7 +42,7 @@
         <mkdir dir="${jar.dir}"/>
         <echo message="Creating EJB Jar file under - /${jar.dir}"/>
         <jar destfile="${jar.dir}/ejb${ant.project.name}.jar" basedir="${ejb-classes.dir}">
-        	<zipfileset dir="${dd.dir}" includes="ejb-jar.xml,jboss.xml" prefix="META-INF"/>
+        	<zipfileset dir="${dd.dir}" includes="ejb-jar.xml,jboss.xml,jbosscmp-jdbc.xml" prefix="META-INF"/>
         </jar>
     </target>       
     
@@ -51,11 +55,11 @@
     	<echo message="Creating War file under - /${war.dir}"/>
 		<war destfile="${war.dir}/${ant.project.name}.war" webxml="${dd.dir}/web.xml">
             <fileset dir="${src.web.ui.dir}" includes="index.jsp" casesensitive="yes"/>                        
-			<zipfileset dir="${src.web.ui.dir}" prefix="WEB-INF/ui" includes="**/*" excludes="index.jsp"/>            
-			<zipfileset dir="${src.web.taglib.dir}" prefix="WEB-INF/ltds" includes="**/*.ltd"/>      
-			                  			
-			<zipfileset dir="${classes.dir}/global/main" prefix="WEB-INF/classes/global/main"/>
-						
+			<zipfileset dir="${src.web.ui.dir}" prefix="global/ui" includes="**/*" excludes="index.jsp"/>            			      			                  			
+			<zipfileset dir="${classes.dir}/global/controller" prefix="WEB-INF/classes/global/controller"/>
+			
+			<!-- zipfileset dir="${src.web.taglib.dir}" prefix="WEB-INF/ltds" includes="**/*.ltd"/ -->			
+			
 			<!-- This line commented as when we do not want to include 
 				 classes dir in WEB-INF folder otherwise uncomment it -->				 
 			<!--classes dir="${classes.dir}"/ -->			
@@ -67,7 +71,8 @@
             <lib dir="${lib.dir}">            	
             	<!-- This line can be uncommented if we want to exclude 
             		 some of thirdparty jar file in lib folder under WEB-INF -->
-		    	<!--exclude name="jtds-1.2.5.jar"/ -->			          
+		    			          
+		    	<exclude name="log*.jar"/>
 		  	</lib>	           		  	
         </war>        			
 	</target>
@@ -78,17 +83,41 @@
 	     <ear earfile="${ear.dir}/${ant.project.name}.ear" appxml="${dd.dir}/application.xml">		      		      
 	     	<fileset dir="${war.dir}" includes="${ant.project.name}.war" />	     	
 	     	<fileset dir="${jar.dir}" includes="${ant.project.name}.jar,ejb${ant.project.name}.jar" />	    
-	     	<!-- This line can be uncommented if JBOSS deployment gives any problem --> 	
+	     	<!-- This line can be uncommented if JBOSS deployment gives any problem (as EAR app not found etc.)--> 	
 	     	<!-- zipfileset dir="${dd.dir}" includes="jboss-app.xml" prefix="META-INF"/ -->
 	     </ear>
     </target>
   
-	<target name="deploy.app" depends="build.ear">        
+	<target name="deploy.app" depends="build.ear">  
+		<delete includeemptydirs="true" quiet="true">
+		    	<fileset dir="${deploy.dir}/${ant.project.name}.ear"/>
+		</delete>      
+		
         <copy todir="${deploy.dir}" overwrite="yes">
       		<fileset dir="${ear.dir}" casesensitive="yes">
         		<include name="*.ear"/> 
         	</fileset>  
         </copy>    
-    </target>		   
+    </target>
+    
+    <target name="deploy-exp">
+        <mkdir dir="${exploded-app.dir}"/>          
+        <unzip src="${ear.dir}/${ant.project.name}.ear"  dest="${exploded-app.dir}/${ant.project.name}.ear"/>
+        
+        <delete quiet="true">
+			<fileset dir="${exploded-app.dir}/${ant.project.name}.ear" includes="${ant.project.name}.war"/>
+		</delete>
+		<unzip src="${war.dir}/${ant.project.name}.war" dest="${exploded-app.dir}/${ant.project.name}.ear/${ant.project.name}.war"/>
+		    		
+        <delete quiet="true">
+			<fileset dir="${deploy.dir}" includes="${ant.project.name}.ear"/>
+		</delete>
+		
+		<copy todir="${deploy.dir}" overwrite="yes">
+      		<fileset dir="${exploded-app.dir}" casesensitive="yes">
+        		<include name="**/*.*"/> 
+        	</fileset>  
+    	</copy>        	 
+   </target>		   
   
 </project>

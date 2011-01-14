@@ -5,8 +5,7 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 <ejb-jar >
 	<description>EJB Examples</description>
 	<display-name>EJB Examples</display-name>	
-	<enterprise-beans>
-			
+	<enterprise-beans>			
 		<session >			
 			<description>EJB Test Session Bean</description>
 			<display-name>EJB Test Session Bean</display-name>
@@ -14,14 +13,78 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 			<ejb-name>TestComponent</ejb-name>
 						
 			<home>global.ejb.TestHome</home>
-			<remote>global.ejb.TestComponent</remote>
-						
-			<local-home>global.ejb.TestLocalHome</local-home>
-			<local>global.ejb.TestLocalComponent</local>
-			
+			<remote>global.ejb.TestComponent</remote>									
 			<ejb-class>global.ejb.TestSessionBean</ejb-class>
 			<session-type>Stateless</session-type>
 			<transaction-type>Container</transaction-type>						
-		</session>			
+		</session>	
+
+		<entity>
+			<display-name>Test Entity Bean</display-name>
+			<ejb-name>TestComponentE</ejb-name>
+			
+			<local-home>global.ejb.TestHomeE</local-home>
+         	<local>global.ejb.TestComponentE</local>		
+			<ejb-class>global.ejb.TestEntityBean</ejb-class>
+			<reentrant>False</reentrant> 
+			<persistence-type>Container</persistence-type>			
+			<cmp-version>2.x</cmp-version>
+
+			<abstract-schema-name>test</abstract-schema-name>
+			<primkey-field>EmployeeID</primkey-field>
+			<prim-key-class>java.lang.String</prim-key-class>
+
+			<cmp-field><field-name>EmployeeID</field-name></cmp-field>
+			<cmp-field><field-name>EmployeeName</field-name></cmp-field>
+			<cmp-field><field-name>EmployeeDOB</field-name></cmp-field>
+			<cmp-field><field-name>EmployeeAddress</field-name></cmp-field>
+			
+			<query>
+	            <query-method>
+	               <method-name>findByEmpName</method-name>
+	               <method-params>
+	                  <method-param>java.lang.String</method-param>
+	               </method-params>
+	            </query-method>
+	            <ejb-ql>
+					<![CDATA[SELECT OBJECT(s) FROM test s WHERE s.EmployeeName = ?1]]>
+				</ejb-ql>
+			</query>
+			
+			<query>
+	            <query-method>
+	               <method-name>findAll</method-name>
+					<method-params></method-params>
+	            </query-method>
+	            <ejb-ql>
+					<![CDATA[SELECT OBJECT(s) FROM test s]]>
+				</ejb-ql>
+			</query>
+			
+			<query>
+	            <query-method>
+	               <method-name>findByEmpID</method-name>
+	               <method-params>
+	                  <method-param>java.lang.String</method-param>
+	               </method-params>
+	            </query-method>
+	            <ejb-ql>
+					<![CDATA[SELECT OBJECT(s) FROM test s WHERE s.EmployeeID = ?1]]>
+				</ejb-ql>
+			</query>
+			
+		</entity>
+	  
 	</enterprise-beans>
+	
+	<assembly-descriptor>
+		<container-transaction>
+			<method>
+				<ejb-name>TestComponentE</ejb-name>
+				<method-name>*</method-name>
+			</method>			
+			<trans-attribute>Required</trans-attribute>
+		</container-transaction>
+    </assembly-descriptor>
+   
 </ejb-jar>
