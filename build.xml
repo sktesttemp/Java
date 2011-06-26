@@ -57,6 +57,7 @@
             <fileset dir="${src.web.ui.dir}" includes="index.jsp" casesensitive="yes"/>                        
 			<zipfileset dir="${src.web.ui.dir}" prefix="global/ui" includes="**/*" excludes="index.jsp"/>            			      			                  			
 			<zipfileset dir="${classes.dir}/global/controller" prefix="WEB-INF/classes/global/controller"/>
+			<zipfileset dir="${dd.dir}" includes="jboss-classloading.xml" prefix="WEB-INF"/>
 			
 			<!-- zipfileset dir="${src.web.taglib.dir}" prefix="WEB-INF/ltds" includes="**/*.ltd"/ -->			
 			
@@ -71,7 +72,8 @@
             <lib dir="${lib.dir}">            	
             	<!-- This line can be uncommented if we want to exclude 
             		 some of thirdparty jar file in lib folder under WEB-INF -->
-		    			          
+            		 
+		    	<exclude name="j2e*.jar"/>		          
 		    	<exclude name="log*.jar"/>
 		  	</lib>	           		  	
         </war>        			

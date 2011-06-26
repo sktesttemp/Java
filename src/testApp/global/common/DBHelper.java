@@ -57,7 +57,7 @@ public class DBHelper
 		String strDatabaseName = "practicedb";
 		String strUserName = "root";
 		String strPassword = "root";				
-				 
+		//-- jdbc:mysql://localhost/practicedb?user=root&password=root
 		String url=strServerName+"://"+strDomain+"/"+strDatabaseName+"?user="+strUserName+"&password="+strPassword;		
 		try
   		{

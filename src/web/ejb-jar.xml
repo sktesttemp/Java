@@ -20,24 +20,26 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 		</session>	
 
 		<entity>
-			<display-name>Test Entity Bean</display-name>
-			<ejb-name>TestComponentE</ejb-name>
+			<description>Testing...</description>
+			<display-name>Test Entity Bean</display-name>			
+			
+			<ejb-name>TestComponentE</ejb-name>			
 			
 			<local-home>global.ejb.TestHomeE</local-home>
          	<local>global.ejb.TestComponentE</local>		
 			<ejb-class>global.ejb.TestEntityBean</ejb-class>
-			<reentrant>False</reentrant> 
 			<persistence-type>Container</persistence-type>			
-			<cmp-version>2.x</cmp-version>
-
-			<abstract-schema-name>test</abstract-schema-name>
-			<primkey-field>EmployeeID</primkey-field>
 			<prim-key-class>java.lang.String</prim-key-class>
-
+			<reentrant>False</reentrant> 
+			<cmp-version>2.x</cmp-version>
+			
+			<abstract-schema-name>test</abstract-schema-name>
+			
 			<cmp-field><field-name>EmployeeID</field-name></cmp-field>
 			<cmp-field><field-name>EmployeeName</field-name></cmp-field>
 			<cmp-field><field-name>EmployeeDOB</field-name></cmp-field>
 			<cmp-field><field-name>EmployeeAddress</field-name></cmp-field>
+			<primkey-field>EmployeeID</primkey-field>
 			
 			<query>
 	            <query-method>
@@ -47,7 +49,7 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 	               </method-params>
 	            </query-method>
 	            <ejb-ql>
-					<![CDATA[SELECT OBJECT(s) FROM test s WHERE s.EmployeeName = ?1]]>
+					<![CDATA[SELECT OBJECT(s) FROM test s WHERE (LOCATE(?1, s.EmployeeName) > 0)]]>
 				</ejb-ql>
 			</query>
 			

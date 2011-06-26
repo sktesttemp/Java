@@ -6,10 +6,7 @@ import java.util.*;
 
 public interface TestHomeE extends EJBLocalHome
 {
-   	/*public TestComponentE create(String strEmpID, String strEmpName, String strEmpDOB, String strEmpAddress) 
-   		throws CreateException,RemoteException;*/
-   		
-    public TestComponentE create() throws CreateException;
+   	public TestComponentE create() throws CreateException;
    		
    	public TestComponentE findByPrimaryKey(String key) throws FinderException;
    
