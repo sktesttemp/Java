@@ -135,5 +135,56 @@ public class DBHelper
 			}				
 		}
 		return vResult;		
- 	} 		
+ 	} 	
+ 	
+ 	public Vector getQueryToVector(String strQuery)
+ 	{	 	
+	 	ResultSet rst=null;	 	
+		Statement stmt=null;
+		Connection conn=null;
+		Vector vResult=new Vector();
+		
+		DBHelper dbh = new DBHelper();	 	
+				
+	 	conn = dbh.getMYSQLConnection();	 	
+	 	System.out.println("\n\ngetQueryToVector:"+conn);
+	 	try
+	 	{		 			 	
+		 	stmt=conn.createStatement();	  		
+		
+		 	rst=stmt.executeQuery(strQuery); 					
+			
+			ResultSetMetaData rsmd = rst.getMetaData();				
+			int nNoOfColumns = rsmd.getColumnCount();      
+			while(rst.next()){
+				for (int i = 1; i <= nNoOfColumns; i++) {				
+					vResult.add(rst.getString(i));
+				}				
+			}						   
+		}
+		catch(SQLException sq)
+  		{
+	  		sq.printStackTrace();
+	  		System.out.println("getQueryToVector:SQL Exception Occured! - "+sq.getMessage());
+  		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("getQueryToVector:Exception Occured! - "+e.getMessage());
+		}
+		finally
+		{
+			try
+			{	
+				rst.close();			
+				stmt.close();
+				conn.close();	 	
+			}
+			catch(Exception ee)
+			{
+				System.out.println("getQueryToVector:Problem in Closing connection!"+ee.getMessage());	
+			}				
+		}
+		return vResult;		
+ 	} 	
 }

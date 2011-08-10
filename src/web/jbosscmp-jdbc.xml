@@ -35,7 +35,12 @@
             <field-name>EmployeeAddress</field-name>
 			<column-name>empaddress</column-name>
             <not-null/>
-         </cmp-field>         
+         </cmp-field>     
+         <cmp-field>
+            <field-name>EmpUserName</field-name>
+			<column-name>username</column-name>
+            <not-null/>
+         </cmp-field>      
       </entity>
    </enterprise-beans>
    

@@ -10,9 +10,7 @@ public interface TestComponentE extends EJBLocalObject
     public String getEmployeeName();
 	public String getEmployeeDOB();
 	public String getEmployeeAddress();
+	public String getEmpUserName();
 	
-    public void setEmployeeID(String sEmpID);
-	public void setEmployeeName(String sEmpName);
-	public void setEmployeeDOB(String sEmpDOB);
-   	public void setEmployeeAddress(String sEmpAdd);   
+	public void save(String strEmpName, String strEmpDOB, String strEmpAdd, String strEmpUserName);	
 }

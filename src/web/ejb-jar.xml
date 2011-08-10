@@ -39,6 +39,7 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 			<cmp-field><field-name>EmployeeName</field-name></cmp-field>
 			<cmp-field><field-name>EmployeeDOB</field-name></cmp-field>
 			<cmp-field><field-name>EmployeeAddress</field-name></cmp-field>
+			<cmp-field><field-name>EmpUserName</field-name></cmp-field>
 			<primkey-field>EmployeeID</primkey-field>
 			
 			<query>
@@ -50,6 +51,18 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 	            </query-method>
 	            <ejb-ql>
 					<![CDATA[SELECT OBJECT(s) FROM test s WHERE (LOCATE(?1, s.EmployeeName) > 0)]]>
+				</ejb-ql>
+			</query>
+			
+			<query>
+	            <query-method>
+	               <method-name>findByUserName</method-name>
+	               <method-params>
+	                  <method-param>java.lang.String</method-param>
+	               </method-params>
+	            </query-method>
+	            <ejb-ql>
+					<![CDATA[SELECT OBJECT(s) FROM test s WHERE (LOCATE(?1, s.EmpUserName) > 0)]]>
 				</ejb-ql>
 			</query>
 			
@@ -87,6 +100,37 @@ Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
 			</method>			
 			<trans-attribute>Required</trans-attribute>
 		</container-transaction>
+		
+		<container-transaction>
+		    <method>
+		        <ejb-name>TestEntityBean</ejb-name>
+		        <method-intf>LocalHome</method-intf>
+		        <method-name>create</method-name>
+		        <method-params>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		        </method-params>
+		    </method>
+		    <trans-attribute>Required</trans-attribute>
+		</container-transaction>
+		
+		<container-transaction>
+		    <method>
+		        <ejb-name>TestEntityBean</ejb-name>
+		        <method-intf>Local</method-intf>
+		        <method-name>save</method-name>
+		        <method-params>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		            <method-param>java.lang.String</method-param>
+		        </method-params>
+		    </method>
+		    <trans-attribute>Required</trans-attribute>
+		</container-transaction>		
     </assembly-descriptor>
    
 </ejb-jar>

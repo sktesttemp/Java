@@ -22,12 +22,31 @@ public abstract class TestEntityBean implements EntityBean
 	public abstract void setEmployeeDOB(String sDOB);
 	
 	public abstract String getEmployeeAddress();
-	public abstract void setEmployeeAddress(String sEmpAdd);	
+	public abstract void setEmployeeAddress(String sEmpAdd);
+	
+	public abstract String getEmpUserName();
+	public abstract void setEmpUserName(String sEmpUserName);
+			
 	//CMP field accessors ------------------------------------------------------
 	
+	public void save(String strEmpName, String strEmpDOB, String strEmpAdd, String strEmpUserName){		
+		setEmployeeName(strEmpName);
+		setEmployeeDOB(strEmpDOB);
+		setEmployeeAddress(strEmpAdd);
+		setEmpUserName(strEmpUserName);		
+	}
+	
     //ejb methods --------------------------------------------------------------	
-   	public String ejbCreate() throws CreateException{return "";}   		
-	public void ejbPostCreate() {}
+   	public String ejbCreate(String sEID, String sEName, String sEDOB, String sEAdd, String sEUName) throws CreateException, DuplicateKeyException{
+		setEmployeeID(sEID);
+	   	setEmployeeName(sEName);
+		setEmployeeDOB(sEDOB);
+		setEmployeeAddress(sEAdd);
+		setEmpUserName(sEUName);   	
+	   	return "";
+	}   		
+	public void ejbPostCreate(String sEID, String sEName, String sEDOB, String sEAdd, String sEUName) {}
+	
    	public void ejbRemove() { }
    	public void ejbStore() { }
    	public void ejbLoad() { }
